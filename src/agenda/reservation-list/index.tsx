@@ -3,7 +3,18 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
 import React, {Component} from 'react';
-import {ActivityIndicator, View, FlatList, StyleProp, ViewStyle, TextStyle, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent} from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  FlatList,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  LayoutChangeEvent,
+  FlatListProps
+} from 'react-native';
 
 import {extractReservationProps} from '../../componentUpdater';
 import {sameDate} from '../../dateutils';
@@ -46,6 +57,7 @@ export type ReservationListProps = ReservationProps & {
   onRefresh?: () => void;
   /** Extractor for underlying FlatList. Ensure that this is unique per item, or else scrolling may have duplicated and / or missing items.  */
   reservationsKeyExtractor?: (item: DayAgenda, index: number) => string;
+  onEndReached: FlatListProps<DayAgenda>['onEndReached'];
 };
 
 interface State {
@@ -289,6 +301,7 @@ class ReservationList extends Component<ReservationListProps, State> {
         onScrollEndDrag={this.props.onScrollEndDrag}
         onMomentumScrollBegin={this.props.onMomentumScrollBegin}
         onMomentumScrollEnd={this.props.onMomentumScrollEnd}
+        onEndReached={this.props.onEndReached}
       />
     );
   }
